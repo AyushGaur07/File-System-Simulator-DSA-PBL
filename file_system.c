@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #define NAME_LEN 50
-
-// ---------------------- STRUCTURE ----------------------
 typedef struct Node {
     char name[NAME_LEN];
-    int isFile;                // 0 = directory, 1 = file
+    int isFile;               
     struct Node *parent;
     struct Node *child;
     struct Node *sibling;
@@ -15,7 +12,6 @@ typedef struct Node {
 
 Node *root, *currentDir;
 
-// ---------------------- CORE FUNCTIONS ----------------------
 Node* createNode(const char *name, int isFile) {
     Node *newNode = (Node*)malloc(sizeof(Node));
     if (!newNode) {
@@ -80,7 +76,6 @@ void deleteNode(Node *target) {
     free(target);
 }
 
-// ---------------------- COMMANDS ----------------------
 void mkdir_cmd(const char *name) {
     if (findChild(currentDir, name)) {
         printf("Directory already exists!\n");
@@ -133,7 +128,6 @@ void rm_cmd(const char *name) {
     deleteNode(temp);
 }
 
-// ---------------------- SEARCH & TEMP ----------------------
 void search(Node *root, const char *name) {
     if (!root) return;
     if (strcmp(root->name, name) == 0) {
@@ -177,7 +171,6 @@ void rmtmp_cmd() {
     printf("All temporary (.tmp) files removed successfully.\n");
 }
 
-// ---------------------- MAIN PROGRAM ----------------------
 int main() {
     root = createNode("", 0);
     currentDir = root;
@@ -209,3 +202,4 @@ int main() {
     printf("Exiting simulator...\n");
     return 0;
 }
+
